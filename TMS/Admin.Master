@@ -1,0 +1,71 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="TMS.Admin" %>
+
+<!DOCTYPE html>
+<link rel="stylesheet" href="CSS/MasterPage.css" />
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="CSS/MainMasterStyle.css">
+
+<script src="Scripts/jquery.min.js"></script>
+<script src="Scripts/popper.js"></script>
+<script src="Scripts/bootstrap.min.js"></script>
+<script src="Scripts/main.js" type="text/javascript"></script>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> TMS</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+
+</head>
+
+<body>
+    <form runat="server">
+        <div class="container">
+            <div class="wrapper d-flex align-items-stretch">
+                <nav id="sidebar">
+                    <div class="custom-menu">
+                        <%--<button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        </button>--%>
+                    </div>
+                    <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg);">
+                        <div class="user-logo">
+                            <div class="img" style="background-image: url(Image/logo.jpg);"></div>
+                            <h3>Catriona Henderson</h3>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled components mb-5">
+                        <li class="active">
+                            <a href="UserRegistration"><span class="fa fa-home mr-3"></span>User Registration</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="fa fa-address-card mr-3"></span>User Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="fa fa-lock-open mr-3"></span>Password Unlock</a>
+                        </li>
+                        <li>
+                            <a href="LoginPage"><span class="fa fa-sign-out mr-3"></span>Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Page Content  -->
+                <div id="content" class="p-4 p-md-5 pt-5">
+                    <div>
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
