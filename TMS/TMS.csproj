@@ -105,7 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="createTaskTest2.aspx" />
+    <Content Include="CreateTask.aspx" />
     <Content Include="CSS\DDLPopUpStyle.css" />
     <Content Include="CSS\GridViewStyle.css" />
     <Content Include="DashBoard.aspx" />
@@ -132,13 +132,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Blank.Master" />
     <Content Include="Admin.Master" />
-    <Content Include="createTaskTest.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Image\AddTask.png" />
     <Content Include="Image\Arrowhead-Down-01.png" />
     <Content Include="Image\bg.jpg" />
     <Content Include="Image\bg_1.jpg" />
-    <Content Include="Image\Calendar.png" />
     <Content Include="Image\Icon.PNG" />
     <Content Include="Image\logo.jpg" />
     <Content Include="LoginPage.aspx" />
@@ -175,8 +173,8 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="User.Master" />
+    <Content Include="UserProfolio.aspx" />
     <Content Include="UserRegistration.aspx" />
-    <Content Include="CreateTask.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -205,12 +203,12 @@
     <Compile Include="Blank.Master.designer.cs">
       <DependentUpon>Blank.Master</DependentUpon>
     </Compile>
-    <Compile Include="createTaskTest2.aspx.cs">
-      <DependentUpon>createTaskTest2.aspx</DependentUpon>
+    <Compile Include="CreateTask.aspx.cs">
+      <DependentUpon>CreateTask.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="createTaskTest2.aspx.designer.cs">
-      <DependentUpon>createTaskTest2.aspx</DependentUpon>
+    <Compile Include="CreateTask.aspx.designer.cs">
+      <DependentUpon>CreateTask.aspx</DependentUpon>
     </Compile>
     <Compile Include="DashBoard.aspx.cs">
       <DependentUpon>DashBoard.aspx</DependentUpon>
@@ -258,6 +256,13 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="UserProfolio.aspx.cs">
+      <DependentUpon>UserProfolio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserProfolio.aspx.designer.cs">
+      <DependentUpon>UserProfolio.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UserRegistration.aspx.cs">
       <DependentUpon>UserRegistration.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -265,25 +270,12 @@
     <Compile Include="UserRegistration.aspx.designer.cs">
       <DependentUpon>UserRegistration.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CreateTask.aspx.cs">
-      <DependentUpon>CreateTask.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreateTask.aspx.designer.cs">
-      <DependentUpon>CreateTask.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="createTaskTest.aspx.cs">
-      <DependentUpon>createTaskTest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="createTaskTest.aspx.designer.cs">
-      <DependentUpon>createTaskTest.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

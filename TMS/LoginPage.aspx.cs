@@ -22,13 +22,11 @@ namespace TMS
         protected void LoginButton_Click(object sender, EventArgs e)
         {
             string accountType = LoginDAL.LoginAuthentication(txtUsername.Text, passwordfield.Text, noOfAttempt);
-            //string accountType = LoginDAL.getUserAccountType(userName);
+            Session["accountType"] = accountType;
+            Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
 
             if (accountType.ToLower() == "user")
             {
-                Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
-                Session["accountType"] = "User";
-
                 if (LoginDAL.checkFirstTimeUser(txtUsername.Text, passwordfield.Text).ToLower() == "true")
                 {
                     Response.Redirect(string.Format("~/PasswordReset.aspx"));
@@ -39,9 +37,7 @@ namespace TMS
             }
             else if (accountType.ToLower() == "admin")
             {
-                Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
-                Session["accountType"] = "User";
-                //Response.Redirect(string.Format("~/DashBoard.aspx"));
+                Response.Redirect(string.Format("~/UserProfolio.aspx"));
             }
             else 
             {
@@ -55,10 +51,7 @@ namespace TMS
                     Response.Write("<script language='javascript'>alert('" + accountType + noOfAttempt + ".');" + "</script>");
                 }
             }
-
             return;
-        }
-
-        
+        }       
     }
 }

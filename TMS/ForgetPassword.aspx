@@ -32,21 +32,17 @@
                         </div>
                     </div>
                     <div class="row justify-content-center" style="border-style: solid; background-color: antiquewhite;">
-                        <h4 style="margin-top:15px; margin-left:30px;">Forgot your password? Dont worry! Just fill in your username and email. We will send you a link to reset your password.</h4>
+                        <h5 style="margin-top:15px; margin-left:30px;">Forgot your password? Dont worry! Just fill in your username and email. We will send you a link to reset your password.</h5>
                         <div class="col-md-6 col-lg-4">
                             <div class="login-wrap p-0">
                                 <%--<form action="#" class="signin-form">--%>
-                                    <div class="form-group">
-                                        <asp:Label ID="Label1" runat="server" Text="Username:" Font-Bold="True" ForeColor="Black"></asp:Label>
-                                        <asp:TextBox ID="txtUsername" runat="server" Width="350px" />
-                                    </div>
                                     <div class="form-group">
                                         <asp:Label ID="Label2" runat="server" Text="Email:" Font-Bold="True" ForeColor="Black"></asp:Label>
                                         <asp:TextBox ID="txtEmail" runat="server" Width="350px" />
                                     </div>
                                     <div class="form-group">
-                                        <asp:Button ID="LoginButton" class="form-control btn btn-primary submit px-3" runat="server" style="width:350px" Text="Reset Password" /> <br/><br/>
-                                        <asp:Button ID="LoginButton1" class="form-control btn btn-primary submit px-3" runat="server" OnClick="btn_Login_Click" style="width:350px" Text="Login" />
+                                        <asp:Button ID="LoginButton" class="form-control btn btn-primary submit px-3" runat="server" OnClick="btn_Submit_Click" style="width:350px; height:32px; margin-bottom:15px;" Text="Reset Password" /> <br />
+                                        <asp:Button ID="LoginButton1" class="form-control btn btn-primary submit px-3" runat="server" OnClick="btn_Login_Click" style="width:350px; height:32px" Text="Login" />
                                     </div>
                                     <br />
                                <%-- </form>--%>

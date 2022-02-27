@@ -13,7 +13,7 @@ namespace TMS.Controller
     {
         static SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TMS"].ConnectionString);
 
-        public static string LoginAuthentication(string username, string password, int noOfAttemps) 
+        public static string LoginAuthentication(string username, string password, int noOfAttemps)
         {
             con.Open();
             string strCommandText = "select account_type from LoginUser where username ='" + username + "' and password ='" + password + "'";
@@ -75,9 +75,41 @@ namespace TMS.Controller
             var userName = passComm.ExecuteScalar();
             con.Close();
 
-            return userName.ToString();
+            if (userName == null)
+                return "";
+            else
+                return userName.ToString();
         }
 
+        public static string getCustNameByEmail(string email)
+        {
+            con.Open();
+            string strCommandText = "select full_name from staff_info where email ='" + email + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var custname = passComm.ExecuteScalar();
+            con.Close();
+
+            if (custname == null)
+                return "";
+            else
+                return custname.ToString();
+        }
+
+        public static string getUserNameByEmail(string email)
+        {
+            con.Open();
+            string strCommandText = "select username from staff_info where email ='" + email + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var username = passComm.ExecuteScalar();
+            con.Close();
+
+            if (username == null)
+                return "";
+            else
+                return username.ToString();
+        }
         public static string checkFirstTimeUser(string username, string password)
         {
             con.Open();
@@ -87,32 +119,33 @@ namespace TMS.Controller
             var first_visit = passComm.ExecuteScalar();
             con.Close();
 
-            return first_visit.ToString();
+            if (first_visit == null)
+                return "";
+            else
+                return first_visit.ToString();
         }
 
-        //public static void UpdateCustInfobyID(string username, string contact, string password, string email) //get all feedback status is Pending
-        //{
-        //    con.Open();
-        //    // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
+        public static void UpdatePassword(string password, int first_visit, string username)
+        {
+            con.Open();
+            // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
 
-        //    string strCommandText = "UPDATE CustomerInfo SET contact = @contact, lastUpdateDate = @lastUpdateDate, emailAddress = @emailAddress, password = @password WHERE username = @username";
-        //    SqlCommand cmd = new SqlCommand(strCommandText, con);
-        //    cmd.Parameters.AddWithValue("@username", username);
-        //    cmd.Parameters.AddWithValue("@contact", contact);
-        //    cmd.Parameters.AddWithValue("@password", password);
-        //    cmd.Parameters.AddWithValue("@emailAddress", email);
-        //    cmd.Parameters.AddWithValue("@lastUpdateDate", DateTime.Today);
+            string strCommandText = "UPDATE LoginUser SET password = @password, first_visit = @first_visit, account_status = 0 WHERE username = @username";
+            SqlCommand cmd = new SqlCommand(strCommandText, con);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@first_visit", first_visit);
+            cmd.Parameters.AddWithValue("@username", username);
 
-        //    //Create Adaptder
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
-        //    con.Close();
+            //Create Adaptder
+            SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
+            con.Close();
 
-        //    //Create Dataset to store results of query
-        //    DataSet myDS = new DataSet();
-        //    //Fill the dataset with the results
-        //    myAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control
-        //}
+            //Create Dataset to store results of query
+            DataSet myDS = new DataSet();
+            //Fill the dataset with the results
+            myAdapter.Fill(myDS);
+            //Bind the data read to the gridview control
+        }
 
         //public static DataSet GetAllCustInfo() //get all feedback status is Pending
         //{
