@@ -11,7 +11,7 @@ namespace TMS
 {
 
 
-    public partial class UserMaster
+    public partial class User
     {
 
         /// <summary>

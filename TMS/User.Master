@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="User.Master.cs" Inherits="TMS.UserMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="User.Master.cs" Inherits="TMS.User" %>
 
 <!DOCTYPE html>
 <link rel="stylesheet" href="CSS/MasterPage.css" />
@@ -32,8 +32,6 @@
             <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="custom-menu">
-                        <%--<button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        </button>--%>
                     </div>
                     <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg);">
                         <div class="user-logo">
@@ -45,7 +43,7 @@
                         <li class="active">
                             <a href="DashBoard"><span class="fa fa-home mr-3"></span>DashBoard</a>
                         </li>
-                       <%-- <li>
+                        <%-- <li>
                             <a href="#"><span class="fa fa-gift mr-3"></span>Gift Code</a>
                         </li>--%>
                         <li>

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace TMS
 {
-    public partial class UserMaster : MasterPage
+    public partial class User : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

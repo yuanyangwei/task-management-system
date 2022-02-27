@@ -147,6 +147,73 @@ namespace TMS.Controller
             //Bind the data read to the gridview control
         }
 
+        public static void CreateUser(string email, string full_name, string phone_no, string position, string department, string roleType, string username, string password, string account_type)
+        {
+            string strCommandText = "INSERT INTO staff_info (email,full_name,phone_no,position,department,roleType,username) VALUES (@email,@full_name,@phone_no,@position,@department,@roleType,@username)";
+
+            SqlCommand myCommand = new SqlCommand(strCommandText, con);
+            myCommand.Parameters.AddWithValue("@email", email);
+            myCommand.Parameters.AddWithValue("@full_name", full_name);
+            myCommand.Parameters.AddWithValue("@phone_no", phone_no);
+            myCommand.Parameters.AddWithValue("@position", position);
+            myCommand.Parameters.AddWithValue("@department", department);
+            myCommand.Parameters.AddWithValue("@roleType", roleType);
+            myCommand.Parameters.AddWithValue("@username", username);
+
+            string strCommandText1 = "INSERT INTO dbo.LoginUser (username,account_status,password,account_type,first_visit) VALUES (@username,@account_status,@password,@account_type,@first_visit)";
+
+            SqlCommand myCommand1 = new SqlCommand(strCommandText1, con);
+            myCommand1.Parameters.AddWithValue("@username", username);
+            myCommand1.Parameters.AddWithValue("@account_status", 0);
+            myCommand1.Parameters.AddWithValue("@password", password);
+            myCommand1.Parameters.AddWithValue("@account_type", account_type);
+            myCommand1.Parameters.AddWithValue("@first_visit", 1);
+
+            con.Open();
+            myCommand.ExecuteNonQuery();
+            myCommand1.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static DataSet PopulateDepartment() //get all feedback status is Pending
+        {
+            con.Open();
+            string strCommandText = "SELECT department FROM Parameter WHERE department IS NOT NULL";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet PopulatePosition() //get all feedback status is Pending
+        {
+            con.Open();
+            string strCommandText = "SELECT position FROM Parameter WHERE position IS NOT NULL";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet PopulateAllUserInfo() //get all feedback status is Pending
+        {
+            con.Open();
+            string strCommandText = "SELECT email, full_name, phone_no, position, department, roleType, S.username,account_status FROM staff_info S INNER JOIN LoginUser L on S.username = L.username";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
         //public static DataSet GetAllCustInfo() //get all feedback status is Pending
         //{
         //    con.Open();

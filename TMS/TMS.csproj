@@ -117,6 +117,7 @@
     <Content Include="CSS\LoginStyle.css" />
     <Content Include="CSS\MainMasterStyle.css" />
     <Content Include="CSS\MasterPage.css" />
+    <Content Include="EmailTemplateNewAcctPassword.html" />
     <Content Include="EmailTemplateResetPassword.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

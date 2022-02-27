@@ -62,41 +62,34 @@
                             ControlToValidate="txtEmail"
                             ErrorMessage="Please Enter Your Email"
                             SetFocusOnError="True">* </asp:RequiredFieldValidator>
-                    </asp:TableCell>
-                </asp:TableRow>
-                <asp:TableRow runat="server">
+                    </asp:TableCell></asp:TableRow><asp:TableRow runat="server">
                     <asp:TableCell>Department:</asp:TableCell><asp:TableCell>
                         <asp:DropDownList ID="ddlDepartment" runat="server" Style="width: 300px; height:26px;"></asp:DropDownList>
-                    </asp:TableCell>
-                    <asp:TableCell>Designation:</asp:TableCell>
-                    <asp:TableCell>
+                    </asp:TableCell><asp:TableCell>Designation:</asp:TableCell><asp:TableCell>
                         <asp:DropDownList ID="ddlDesignation" runat="server" Style="width: 300px; height:26px;"></asp:DropDownList>
-                    </asp:TableCell>
+                    </asp:TableCell></asp:TableRow><asp:TableRow runat="server">
+                    <asp:TableCell ColumnSpan="4"><hr style="margin-left:0px; width:95%;"></asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow runat="server">
-                    <asp:TableCell ColumnSpan="4"><hr style="margin-left:0px; width:95%;" /></asp:TableCell>
-                </asp:TableRow>
-                <asp:TableRow runat="server">
-                    <asp:TableCell>Username:</asp:TableCell>
-                    <asp:TableCell>
-                        <asp:TextBox ID="txtUserName" runat="server" Style="width: 300px" />
+                    <asp:TableCell>Username:</asp:TableCell><asp:TableCell>
+                        <asp:TextBox ID="txtUserName" runat="server" Style="width: 300px"/>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4"
                             runat="server"
                             ControlToValidate="txtUserName"
                             ErrorMessage="Please Enter Your Username"
                             SetFocusOnError="True">* </asp:RequiredFieldValidator>
-                    </asp:TableCell>
-                    <asp:TableCell>Role Type:</asp:TableCell>
-                    <asp:TableCell>
+                    </asp:TableCell><asp:TableCell>Role Type:</asp:TableCell><asp:TableCell>
                         <asp:DropDownList ID="ddlRoleType" runat="server" Style="width: 300px; height:26px;">
                             <asp:ListItem>Normal User</asp:ListItem>
                             <asp:ListItem>Manager</asp:ListItem>
                         </asp:DropDownList>
-                    </asp:TableCell>
-                </asp:TableRow>
-            </asp:Table>
-        </fieldset>
-        <br />
+                    </asp:TableCell></asp:TableRow><asp:TableRow runat="server">
+                    <asp:TableCell>Access Type:</asp:TableCell><asp:TableCell>
+                         <asp:DropDownList ID="ddlAccessType" runat="server" Style="width: 300px; height:26px;">
+                            <asp:ListItem>User</asp:ListItem>
+                            <asp:ListItem>Admin</asp:ListItem>
+                        </asp:DropDownList>
+                    </asp:TableCell></asp:TableRow></asp:Table></fieldset> <br />
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
         <asp:Button ID="btn_create" runat="server" BackColor="#163a55" OnClick="btn_create_Click" Text="Create" BorderColor="#163A55" Font-Bold="True" ForeColor="White" Width="160px" Height="40px" class="btn btn-light" /><br />
         <br />
