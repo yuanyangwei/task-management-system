@@ -39,25 +39,28 @@
                             <h3>Catriona Henderson</h3>
                         </div>
                     </div>
+
+                    <%  var RoleType = Session["RoleType"];%>
+
                     <ul class="list-unstyled components mb-5">
-                        <li class="active">
-                            <a href="DashBoard"><span class="fa fa-home mr-3"></span>DashBoard</a>
+                        <li>
+                            <a href="/DashBoard"><span class="fa fa-home mr-3"></span>DashBoard</a>
                         </li>
-                        <%-- <li>
-                            <a href="#"><span class="fa fa-gift mr-3"></span>Gift Code</a>
-                        </li>--%>
+                        <li>
+                            <a href="CreateTask"><span class="fa fa-plus mr-3"></span>Add New Task</a>
+                        </li>
+
+                        <%  
+                            if (RoleType.ToString() == "Manager")
+                        {%>
+                                <li>
+                                    <a href="CreateTask"><span class="fa fa-plus mr-3"></span>Add New Project</a>
+                                </li>
+                        <%} %>
+                            
                         <li>
                             <a href="#"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Reminder</a>
                         </li>
-                        <%--<li>
-                            <a href="#"><span class="fa fa-gift mr-3"></span>Gift Code</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-trophy mr-3"></span>Top Review</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-cog mr-3"></span>Settings</a>
-                        </li>--%>
                         <li>
                             <a href="#"><span class="fa fa-address-card mr-3"></span>Profile</a>
                         </li>

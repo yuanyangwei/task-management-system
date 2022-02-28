@@ -24,6 +24,7 @@ namespace TMS
             string accountType = LoginDAL.LoginAuthentication(txtUsername.Text, passwordfield.Text, noOfAttempt);
             Session["accountType"] = accountType;
             Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
+            Session["RoleType"] = LoginDAL.getRoleType(txtUsername.Text);
 
             if (accountType.ToLower() == "user")
             {
