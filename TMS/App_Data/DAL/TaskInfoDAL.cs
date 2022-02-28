@@ -16,7 +16,7 @@ namespace TMS.Controller
         public static DataSet GetTaskInfo(string username) //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE P.project_status = 'Ongoing' and assignee ='" + username + "'";
+            string strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE P.project_status = 'Ongoing' and assignee ='" + username + "' ORDER BY project_name ASC";
             SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -29,7 +29,7 @@ namespace TMS.Controller
         public static DataSet PopulateProjectName(string username) //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT DISTINCT T.project_id, project_name FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assignee ='" + username + "'";
+            string strCommandText = "SELECT DISTINCT T.project_id, project_name FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assignee ='" + username + "' ORDER BY project_name ASC";
             SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -42,7 +42,7 @@ namespace TMS.Controller
         public static string GetProjectStatus(string ProjectName) //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT DISTINCT project_status FROM ProjectInfo WHERE project_name ='" + ProjectName + "'";
+            string strCommandText = "SELECT DISTINCT project_status FROM ProjectInfo WHERE project_name ='" + ProjectName + "' ORDER BY project_status ASC";
             SqlDataAdapter myprojectStatusInfoAdapter = new SqlDataAdapter(strCommandText, con);
             SqlCommand passComm = new SqlCommand(strCommandText, con);
             var status = passComm.ExecuteScalar();

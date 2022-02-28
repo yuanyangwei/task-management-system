@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Blank.master.cs" Inherits="TMS.Blank" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Blank.Master.cs" Inherits="TMS.Blank" %>
 
 <!DOCTYPE html>
 

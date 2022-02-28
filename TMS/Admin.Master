@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="TMS.Admin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.Master.cs" Inherits="TMS.Admin" %>
 
 <!DOCTYPE html>
 <link rel="stylesheet" href="CSS/MasterPage.css" />
@@ -46,7 +46,7 @@
                             <a href="UserRegistration"><span class="fa fa-home mr-3"></span>User Registration</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-address-card mr-3"></span>User Profile</a>
+                            <a href="UserProfolio"><span class="fa fa-address-card mr-3"></span>User Profile</a>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-lock-open mr-3"></span>Password Unlock</a>

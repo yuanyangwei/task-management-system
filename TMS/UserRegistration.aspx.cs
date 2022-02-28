@@ -18,24 +18,58 @@ namespace TMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            PopulateDepartment();
-            PopulatePosition();
+            if (!IsPostBack)
+            {
+                PopulateDepartment();
+                PopulatePosition();
+                ResetTextField();
+            }
+            ValidationBox();
+
 
         }
 
         protected void btn_create_Click(object sender, EventArgs e)
         {
-
-            string newpassword = GetRandomString();
-            SendMail(txtEmail.Text.ToLower(), newpassword, txtFName.Text);
-            LoginDAL.UpdatePassword(newpassword, 1, LoginDAL.getUserNameByEmail(txtEmail.Text.ToLower()));
-            Response.Write("<script language='javascript'>alert('Email has been send successfully!');" + "</script>");
-
-            LoginDAL.CreateUser(txtEmail.Text.ToLower(), txtFName.Text, txtContact.Text, ddlDesignation.SelectedValue, ddlDepartment.SelectedValue, ddlRoleType.SelectedValue, Session["Username"].ToString(), newpassword, ddlAccessType.SelectedValue);
-
-
+            if(ValidationBox() == true)
+            {
+                string newpassword = GetRandomString();
+                LoginDAL.CreateUser(txtEmail.Text.ToLower(), txtFName.Text, txtContact.Text, ddlDesignation.SelectedValue, ddlDepartment.SelectedValue, ddlRoleType.SelectedValue, txtUserName.Text.ToLower(), newpassword, ddlAccessType.SelectedValue);
+                SendMail(txtEmail.Text.ToLower(), newpassword, txtFName.Text);
+                ResetTextField();
+                Response.Write("<script language='javascript'>alert('Account has been set up successfully!');" + "</script>");
+            }   
         }
 
+        protected void ResetTextField()
+        {
+            txtContact.Text = "";
+            txtEmail.Text = "";
+            txtFName.Text = "";
+            txtUserName.Text = "";
+        }
+
+        protected bool ValidationBox()
+        {
+            string username = LoginDAL.CheckUsernameExist(txtUserName.Text.ToLower());
+            string contactNo = LoginDAL.CheckContactExist(txtContact.Text);
+            string email = LoginDAL.CheckEmailExist(txtEmail.Text.ToLower());
+
+            if (txtContact.Text != "" && txtEmail.Text != "" && txtUserName.Text != "")
+            {
+                RequiredFieldValidator9.InitialValue = email;
+                RequiredFieldValidator9.ErrorMessage = "Email adddress has been registered, please use another Email!";
+                RequiredFieldValidator7.InitialValue = username;
+                RequiredFieldValidator7.ErrorMessage = "Username has been registered, please use another username!";
+                RequiredFieldValidator3.InitialValue = contactNo;
+                RequiredFieldValidator3.ErrorMessage = "Contact number has been registered, please use another contact number!";
+            }
+
+            if (username == "" && contactNo == "" && email == "") //all new value
+                return true;
+            else
+                return false;
+        }
         public static string GetRandomString()
         {
             string path = Path.GetRandomFileName();

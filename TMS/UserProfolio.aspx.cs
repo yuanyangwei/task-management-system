@@ -9,7 +9,7 @@ using TMS.Controller;
 
 namespace TMS
 {
-    public partial class UserProfolio : Page
+    public partial class UserProfolio : System.Web.UI.Page
     {
         private static readonly string TBL_KEY = "tbl";
         private const string ASCENDING = " ASC";
@@ -18,9 +18,10 @@ namespace TMS
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            {  
+                PopulateDepartment();
+                PopulatePosition();
                 BindGridView();
-                //PopulateProjectName();
             }
         }
 
@@ -89,3 +90,32 @@ namespace TMS
 
     }
 }
+
+
+
+///// <summary>
+///// ddlRoleType control.
+///// </summary>
+///// <remarks>
+///// Auto-generated field.
+///// To modify move field declaration from designer file to code-behind file.
+///// </remarks>
+//protected global::System.Web.UI.WebControls.DropDownList ddlRoleType;
+
+///// <summary>
+///// ddlDepartment control.
+///// </summary>
+///// <remarks>
+///// Auto-generated field.
+///// To modify move field declaration from designer file to code-behind file.
+///// </remarks>
+//protected global::System.Web.UI.WebControls.DropDownList ddlDepartment;
+
+///// <summary>
+///// ddlDesignation control.
+///// </summary>
+///// <remarks>
+///// Auto-generated field.
+///// To modify move field declaration from designer file to code-behind file.
+///// </remarks>
+//protected global::System.Web.UI.WebControls.DropDownList ddlDesignation;

@@ -170,15 +170,15 @@ namespace TMS.Controller
             myCommand1.Parameters.AddWithValue("@first_visit", 1);
 
             con.Open();
-            myCommand.ExecuteNonQuery();
             myCommand1.ExecuteNonQuery();
+            myCommand.ExecuteNonQuery();
             con.Close();
         }
 
         public static DataSet PopulateDepartment() //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT department FROM Parameter WHERE department IS NOT NULL";
+            string strCommandText = "SELECT department FROM Parameter WHERE department IS NOT NULL ORDER BY department ASC";
             SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -191,7 +191,7 @@ namespace TMS.Controller
         public static DataSet PopulatePosition() //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT position FROM Parameter WHERE position IS NOT NULL";
+            string strCommandText = "SELECT position FROM Parameter WHERE position IS NOT NULL ORDER BY position ASC";
             SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -204,7 +204,7 @@ namespace TMS.Controller
         public static DataSet PopulateAllUserInfo() //get all feedback status is Pending
         {
             con.Open();
-            string strCommandText = "SELECT email, full_name, phone_no, position, department, roleType, S.username,account_status FROM staff_info S INNER JOIN LoginUser L on S.username = L.username";
+            string strCommandText = "SELECT employee_id, email, full_name, phone_no, position, department, roleType, S.username,account_status FROM staff_info S INNER JOIN LoginUser L on S.username = L.username ORDER BY full_name ASC";
             SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -214,6 +214,50 @@ namespace TMS.Controller
             return myDS;
         }
 
+        public static string CheckUsernameExist(string username)
+        {
+            con.Open();
+            string strCommandText = "select username from staff_info where username ='" + username + "'"; 
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var name = passComm.ExecuteScalar();
+            con.Close();
+
+            if (name == null)
+                return "";
+            else
+                return name.ToString();
+        }
+
+        public static string CheckEmailExist(string email)
+        {
+            con.Open();
+            string strCommandText = "select email from staff_info where email ='" + email + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var emailAdd = passComm.ExecuteScalar();
+            con.Close();
+
+            if (emailAdd == null)
+                return "";
+            else
+                return emailAdd.ToString();
+        }
+
+        public static string CheckContactExist(string contact)
+        {
+            con.Open();
+            string strCommandText = "select phone_no from staff_info where phone_no ='" + contact + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var contactNo = passComm.ExecuteScalar();
+            con.Close();
+
+            if (contactNo == null)
+                return "";
+            else
+                return contactNo.ToString();
+        }
         //public static DataSet GetAllCustInfo() //get all feedback status is Pending
         //{
         //    con.Open();
