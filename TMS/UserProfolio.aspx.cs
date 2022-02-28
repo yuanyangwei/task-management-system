@@ -18,9 +18,7 @@ namespace TMS
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {  
-                PopulateDepartment();
-                PopulatePosition();
+            {   
                 BindGridView();
             }
         }
@@ -31,40 +29,51 @@ namespace TMS
             GridView1.DataBind();
         }
 
-        private void PopulateDepartment()
-        {
-            DataSet ds = new DataSet();
-            ds = LoginDAL.PopulateDepartment();
-            
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                ddlDepartment.Items.Add(ds.Tables[0].Rows[i]["department"].ToString());
-            }
-        }
-
-        private void PopulatePosition()
-        {
-            DataSet ds = new DataSet();
-            ds = LoginDAL.PopulatePosition();
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                ddlDesignation.Items.Add(ds.Tables[0].Rows[i]["position"].ToString());
-            }
-        }
 
         // row edit event
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridView1.EditIndex = e.NewEditIndex;
+            //PopulateDepartment();
+            //PopulatePosition();
             BindGridView();
         }
+
+        protected void RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && GridView1.EditIndex == e.Row.RowIndex)
+            {
+                DropDownList ddlDesignation = (DropDownList)e.Row.FindControl("ddlDesignation");
+                DataSet ds1 = new DataSet();
+                ds1 = LoginDAL.PopulatePosition();
+
+                ddlDesignation.DataSource = ds1;
+                ddlDesignation.DataTextField = "Position";
+                ddlDesignation.DataValueField = "Position";
+                ddlDesignation.DataBind();
+                string selectedPosition = DataBinder.Eval(e.Row.DataItem, "Position").ToString();
+                ddlDesignation.Items.FindByValue(selectedPosition).Selected = true;
+
+                DropDownList ddlDepartment = (DropDownList)e.Row.FindControl("ddlDepartment");
+                DataSet ds = new DataSet();
+                ds = LoginDAL.PopulateDepartment();
+
+                ddlDepartment.DataSource = ds;
+                ddlDepartment.DataTextField = "Department";
+                ddlDepartment.DataValueField = "Department";
+                ddlDepartment.DataBind();
+                string selectedDepartment = DataBinder.Eval(e.Row.DataItem, "Department").ToString();
+                ddlDepartment.Items.FindByValue(selectedDepartment).Selected = true;
+
+            }
+        }
+         
 
         // row update event
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
 
-
+            //string city = (gvCustomers.Rows[e.RowIndex].FindControl("ddlCities") as DropDownList).SelectedItem.Value;
             //BindGridView();
 
         }
