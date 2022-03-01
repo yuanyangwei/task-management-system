@@ -52,20 +52,24 @@
 
                         <%  
                             if (RoleType.ToString() == "Manager")
-                        {%>
-                                <li>
-                                    <a href="CreateTask"><span class="fa fa-plus mr-3"></span>Add New Project</a>
-                                </li>
+                            {%>
+                        <li>
+                            <a href="CreateNewProject"><span class="fa fa-plus mr-3"></span>Add New Project</a>
+                        </li>
+
+                        <li>
+                            <a href="ViewProjectList"><span class="fa fa-pencil-square-o mr-3"></span>Update Project Status</a>
+                        </li>
                         <%} %>
-                            
+
                         <li>
                             <a href="#"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Reminder</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-address-card mr-3"></span>Profile</a>
+                            <a href="UserProfolio"><span class="fa fa-address-card mr-3"></span>My Profile</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-key mr-3"></span>Password Reset</a>
+                            <a href="PasswordReset"><span class="fa fa-key mr-3"></span>Password Reset</a>
                         </li>
                         <li>
                             <a href="LoginPage"><span class="fa fa-sign-out mr-3"></span>Sign Out</a>

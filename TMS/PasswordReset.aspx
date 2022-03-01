@@ -15,9 +15,11 @@
             border-width: thin;
             border-color: slategray;
             min-width: inherit;
-            padding-left: 50px;
-            padding-right: 50px;
-            font-size: large;
+            padding: 15px;
+        }
+
+        th, td {
+            padding: 8px
         }
     </style>
 

@@ -96,6 +96,21 @@ namespace TMS.Controller
                 return roleType.ToString();
         }
 
+        public static string getDepartmentName(string username)
+        {
+            con.Open();
+            string strCommandText = "select department from staff_info where username ='" + username + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var roleType = passComm.ExecuteScalar();
+            con.Close();
+
+            if (roleType == null)
+                return "";
+            else
+                return roleType.ToString();
+        }
+
         public static string getCustNameByEmail(string email)
         {
             con.Open();

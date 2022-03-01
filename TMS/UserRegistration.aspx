@@ -41,6 +41,7 @@
                             SetFocusOnError="True">**</asp:RequiredFieldValidator>
                     </asp:TableCell>
                 </asp:TableRow>
+
                 <asp:TableRow runat="server">
                     <asp:TableCell>Contact:</asp:TableCell>
                     <asp:TableCell>
@@ -78,6 +79,7 @@
                     </asp:TableCell></asp:TableRow><asp:TableRow runat="server">
                     <asp:TableCell ColumnSpan="4"><hr style="margin-left:0px; width:95%;"></asp:TableCell>
                 </asp:TableRow>
+
                 <asp:TableRow runat="server">
                     <asp:TableCell>Username:</asp:TableCell><asp:TableCell>
                         <asp:TextBox ID="txtUserName" runat="server" Style="width: 300px; text-transform: lowercase;" />

@@ -49,7 +49,7 @@
                             <a href="UserProfolio"><span class="fa fa-address-card mr-3"></span>User Profile</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-lock-open mr-3"></span>Password Unlock</a>
+                            <a href="PasswordReset"><span class="fa fa-lock-open mr-3"></span>Password Unlock</a>
                         </li>
                         <li>
                             <a href="LoginPage"><span class="fa fa-sign-out mr-3"></span>Sign Out</a>

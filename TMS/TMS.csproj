@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateNewProject.aspx" />
     <Content Include="CreateTask.aspx" />
     <Content Include="CSS\DDLPopUpStyle.css" />
     <Content Include="CSS\GridViewStyle.css" />
@@ -176,6 +177,7 @@
     <Content Include="User.Master" />
     <Content Include="UserProfolio.aspx" />
     <Content Include="UserRegistration.aspx" />
+    <Content Include="ViewProjectList.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -203,6 +205,13 @@
     </Compile>
     <Compile Include="Blank.Master.designer.cs">
       <DependentUpon>Blank.Master</DependentUpon>
+    </Compile>
+    <Compile Include="CreateNewProject.aspx.cs">
+      <DependentUpon>CreateNewProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateNewProject.aspx.designer.cs">
+      <DependentUpon>CreateNewProject.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateTask.aspx.cs">
       <DependentUpon>CreateTask.aspx</DependentUpon>
@@ -270,6 +279,13 @@
     </Compile>
     <Compile Include="UserRegistration.aspx.designer.cs">
       <DependentUpon>UserRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProjectList.aspx.cs">
+      <DependentUpon>ViewProjectList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewProjectList.aspx.designer.cs">
+      <DependentUpon>ViewProjectList.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

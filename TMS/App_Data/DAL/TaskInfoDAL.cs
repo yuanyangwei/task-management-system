@@ -13,7 +13,7 @@ namespace TMS.Controller
     {
         static SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TMS"].ConnectionString);
 
-        public static DataSet GetTaskInfo(string username) //get all feedback status is Pending
+        public static DataSet GetTaskInfo(string username) 
         {
             con.Open();
             string strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE P.project_status = 'Ongoing' and assignee ='" + username + "' ORDER BY project_name ASC";
@@ -26,7 +26,7 @@ namespace TMS.Controller
             return myDS;
         }
 
-        public static DataSet PopulateProjectName(string username) //get all feedback status is Pending
+        public static DataSet PopulateProjectName(string username) // Need Change
         {
             con.Open();
             string strCommandText = "SELECT DISTINCT T.project_id, project_name FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assignee ='" + username + "' ORDER BY project_name ASC";
@@ -39,7 +39,7 @@ namespace TMS.Controller
             return myDS;
         }
 
-        public static string GetProjectStatus(string ProjectName) //get all feedback status is Pending
+        public static string GetProjectStatus(string ProjectName) 
         {
             con.Open();
             string strCommandText = "SELECT DISTINCT project_status FROM ProjectInfo WHERE project_name ='" + ProjectName + "' ORDER BY project_status ASC";
@@ -48,7 +48,43 @@ namespace TMS.Controller
             var status = passComm.ExecuteScalar();
             con.Close();
 
-            return status.ToString();
+            if (status == null)
+                return "";
+            else
+                return status.ToString();
+        }
+
+        public static string GetProjectNameByDepartment(string ProjectName, string username)
+        {
+            string department = LoginDAL.getDepartmentName(username);
+
+            con.Open();
+            string strCommandText = "SELECT DISTINCT project_name FROM ProjectInfo WHERE project_name ='" + ProjectName + "' AND department = '" + department + "'";
+            SqlDataAdapter myprojectStatusInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var projectname = passComm.ExecuteScalar();
+            con.Close();
+            
+            if (projectname == null)
+                return "";
+            else
+                return projectname.ToString();
+        }
+
+        public static void CreateNewProject(string projectName, string projectDesc, string projectStatus, string username)
+        {
+            string department = LoginDAL.getDepartmentName(username);
+            string strCommandText = "INSERT INTO dbo.ProjectInfo (project_name,project_des,project_status,department) VALUES (@project_name,@project_des,@project_status,@department)";
+
+            SqlCommand myCommand = new SqlCommand(strCommandText, con);
+            myCommand.Parameters.AddWithValue("@projectName", projectName);
+            myCommand.Parameters.AddWithValue("@projectDesc", projectDesc);
+            myCommand.Parameters.AddWithValue("@projectStatus", projectStatus);
+            myCommand.Parameters.AddWithValue("@department", department);
+
+            con.Open();
+            myCommand.ExecuteNonQuery();
+            con.Close();
         }
 
         //public static DataSet PopulateProjectName(string userType) //get all feedback status is Pending
