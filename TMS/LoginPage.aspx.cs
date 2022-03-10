@@ -38,7 +38,7 @@ namespace TMS
             }
             else if (accountType.ToLower() == "admin")
             {
-                Response.Redirect(string.Format("~/UserProfolio.aspx"));
+                Response.Redirect(string.Format("~/UserPortfolio.aspx"));
             }
             else 
             {

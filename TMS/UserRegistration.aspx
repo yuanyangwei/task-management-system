@@ -8,7 +8,7 @@
             padding: 3px 6px;
         }
 
-        fieldset {
+        fieldset { 
             margin-bottom: auto;
             margin-right: auto;
             border-style: solid;

@@ -9,7 +9,7 @@ using TMS.Controller;
 
 namespace TMS
 {
-    public partial class UserProfolio : System.Web.UI.Page
+    public partial class UserPortfolio : System.Web.UI.Page
     {
         private static readonly string TBL_KEY = "tbl";
         private const string ASCENDING = " ASC";
@@ -34,8 +34,6 @@ namespace TMS
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridView1.EditIndex = e.NewEditIndex;
-            //PopulateDepartment();
-            //PopulatePosition();
             BindGridView();
         }
 
@@ -73,8 +71,18 @@ namespace TMS
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
 
-            //string city = (gvCustomers.Rows[e.RowIndex].FindControl("ddlCities") as DropDownList).SelectedItem.Value;
-            //BindGridView();
+            string designation = (GridView1.Rows[e.RowIndex].FindControl("ddlDesignation") as DropDownList).SelectedItem.Value;
+            string department = (GridView1.Rows[e.RowIndex].FindControl("ddlDepartment") as DropDownList).SelectedItem.Value;
+            string roleType = (GridView1.Rows[e.RowIndex].FindControl("ddlRoleType") as DropDownList).SelectedItem.Value;
+            string account_status = (GridView1.Rows[e.RowIndex].FindControl("dllAcctStatus") as DropDownList).SelectedItem.Value;
+            if (account_status == "Locked")
+                account_status = "true";
+            else
+                account_status = "false";
+            string username = (GridView1.Rows[e.RowIndex].FindControl("lblUsername") as Label).Text;
+            LoginDAL.UpdateUserInfo(designation, department, roleType, account_status, username);
+            GridView1.EditIndex = -1;
+            BindGridView();
 
         }
 
@@ -99,32 +107,3 @@ namespace TMS
 
     }
 }
-
-
-
-///// <summary>
-///// ddlRoleType control.
-///// </summary>
-///// <remarks>
-///// Auto-generated field.
-///// To modify move field declaration from designer file to code-behind file.
-///// </remarks>
-//protected global::System.Web.UI.WebControls.DropDownList ddlRoleType;
-
-///// <summary>
-///// ddlDepartment control.
-///// </summary>
-///// <remarks>
-///// Auto-generated field.
-///// To modify move field declaration from designer file to code-behind file.
-///// </remarks>
-//protected global::System.Web.UI.WebControls.DropDownList ddlDepartment;
-
-///// <summary>
-///// ddlDesignation control.
-///// </summary>
-///// <remarks>
-///// Auto-generated field.
-///// To modify move field declaration from designer file to code-behind file.
-///// </remarks>
-//protected global::System.Web.UI.WebControls.DropDownList ddlDesignation;

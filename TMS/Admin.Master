@@ -43,13 +43,13 @@
                     </div>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
+                            <a href="UserPortfolio"><span class="fa fa-address-card mr-3"></span>User Portfolio</a>
+                        </li>
+                        <li>
                             <a href="UserRegistration"><span class="fa fa-home mr-3"></span>User Registration</a>
                         </li>
                         <li>
-                            <a href="UserProfolio"><span class="fa fa-address-card mr-3"></span>User Profile</a>
-                        </li>
-                        <li>
-                            <a href="PasswordReset"><span class="fa fa-lock-open mr-3"></span>Password Unlock</a>
+                            <a href="AdminPasswordReset"><span class="fa fa-key mr-3"></span>Password Reset</a>
                         </li>
                         <li>
                             <a href="LoginPage"><span class="fa fa-sign-out mr-3"></span>Sign Out</a>

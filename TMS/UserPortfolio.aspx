@@ -1,11 +1,11 @@
-﻿<%@ Page Title="UserProfolio" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="UserProfolio.aspx.cs" Inherits="TMS.UserProfolio" %>
+﻿<%@ Page Title="UserPortfolio" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="UserPortfolio.aspx.cs" Inherits="TMS.UserPortfolio" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="CSS/GridViewStyle.css" />
     <link rel="stylesheet" href="CSS/DDLPopUpStyle.css" />
 
     <div>
-        <h3>Customer Profolio List</h3>
+        <h3>Customer Portfolio List</h3>
         <br />
         <br />
 
@@ -26,7 +26,7 @@
             <asp:TemplateField HeaderText="User Name">
                     <ItemStyle Width="150px" />
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Eval("username" ) %>'></asp:Label>
+                        <asp:Label ID="lblUsername" runat="server" Text='<%# Eval("username" ) %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 

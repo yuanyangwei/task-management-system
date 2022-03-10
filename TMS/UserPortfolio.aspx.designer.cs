@@ -11,7 +11,7 @@ namespace TMS
 {
 
 
-    public partial class UserProfolio
+    public partial class UserPortfolio
     {
 
         /// <summary>

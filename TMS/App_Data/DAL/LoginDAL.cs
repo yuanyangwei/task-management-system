@@ -288,6 +288,38 @@ namespace TMS.Controller
             else
                 return contactNo.ToString();
         }
+
+        public static void UpdateUserInfo(string designation, string department, string roleType, string accountLock, string username)
+        {
+            con.Open();
+            // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
+
+            string strCommandText = "UPDATE staff_info SET position = @position, department = @department, roleType = @roleType WHERE username = @username";
+            SqlCommand cmd = new SqlCommand(strCommandText, con);
+            cmd.Parameters.AddWithValue("@position", designation);
+            cmd.Parameters.AddWithValue("@department", department);
+            cmd.Parameters.AddWithValue("@roleType", roleType);
+            cmd.Parameters.AddWithValue("@username", username);
+
+            string strCommandText1 = "UPDATE LoginUser SET account_status = @account_status WHERE username = @username";
+            SqlCommand cmd1 = new SqlCommand(strCommandText1, con);
+            cmd1.Parameters.AddWithValue("@account_status", accountLock);
+            cmd1.Parameters.AddWithValue("@username", username);
+
+
+            //Create Adaptder
+            SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
+            SqlDataAdapter myAdapter1 = new SqlDataAdapter(cmd1);
+            con.Close();
+
+            //Create Dataset to store results of query
+            DataSet myDS = new DataSet();
+            DataSet myDS1 = new DataSet();
+            //Fill the dataset with the results
+            myAdapter.Fill(myDS);
+            myAdapter1.Fill(myDS1);
+            //Bind the data read to the gridview control
+        }
         //public static DataSet GetAllCustInfo() //get all feedback status is Pending
         //{
         //    con.Open();
