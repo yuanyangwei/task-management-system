@@ -78,8 +78,6 @@
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:DropDownList ID="ddlRoleType" runat="server" BackColor="#F6F1DB" ForeColor="Black">
-                            <asp:ListItem>Normal User</asp:ListItem>
-                            <asp:ListItem>Manager</asp:ListItem>
                         </asp:DropDownList>
                     </EditItemTemplate>
                 </asp:TemplateField>

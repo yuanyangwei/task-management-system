@@ -33,29 +33,28 @@
                     <asp:TableCell>Project Name:</asp:TableCell>
                     <asp:TableCell>
                         <asp:TextBox ID="txtProjectName" runat="server" Style="max-width: 500px; width: 500px" />
+                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9"
+                            runat="server"
+                            ControlToValidate="txtProjectName"
+                            SetFocusOnError="True">*</asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7"
                             runat="server"
                             ControlToValidate="txtProjectName"
                             ErrorMessage="Please Enter Your Project Name"
-                            SetFocusOnError="True"> *</asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9"
-                            runat="server"
-                            ControlToValidate="txtProjectName"
-                            SetFocusOnError="True">*</asp:RequiredFieldValidator>
+                            SetFocusOnError="True"> *</asp:RequiredFieldValidator>                      
                     </asp:TableCell>
                 </asp:TableRow>
-
                 <asp:TableRow runat="server">
                     <asp:TableCell>Project Description:</asp:TableCell>
                     <asp:TableCell>
                         <asp:TextBox ID="txtProjectDesc" runat="server" Style="max-width: 500px; width: 500px; height: 200px;" TextMode="MultiLine" />
                     </asp:TableCell>
                 </asp:TableRow>
-
                 <asp:TableRow runat="server">
                     <asp:TableCell>Project Status:</asp:TableCell>
                     <asp:TableCell>
                         <asp:DropDownList ID="ddlProjectStatus" runat="server" Style="width: 500px; height: 26px;">
+                            <asp:ListItem>Pending</asp:ListItem>
                             <asp:ListItem>Ongoing</asp:ListItem>
                             <asp:ListItem>Completed</asp:ListItem>
                             <asp:ListItem>Suspend</asp:ListItem>

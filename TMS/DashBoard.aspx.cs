@@ -19,10 +19,10 @@ namespace TMS
         {
             if (!IsPostBack)
             {
-                BindGridView();
                 PopulateProjectName();
+                ddlFilterByProjectTypePostCheck();
+                BindGridView();
             }
-
         }
 
         private void PopulateProjectName()
@@ -39,9 +39,26 @@ namespace TMS
 
         //method for binding GridView
 
+        protected void RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && GridView1.EditIndex == e.Row.RowIndex)
+            {
+                DropDownList ddlStatusType = (DropDownList)e.Row.FindControl("ddlStatusType");
+                DataSet ds1 = new DataSet();
+                ds1 = TaskInfoDAL.PopulateTaskStatus();
+
+                ddlStatusType.DataSource = ds1;
+                ddlStatusType.DataTextField = "taskStatus";
+                ddlStatusType.DataValueField = "taskStatus";
+                ddlStatusType.DataBind();
+                string selectedStatusType = DataBinder.Eval(e.Row.DataItem, "task_status").ToString();
+                ddlStatusType.Items.FindByValue(selectedStatusType).Selected = true;
+            }
+        }
+
         protected void BindGridView()
         {
-            GridView1.DataSource = TaskInfoDAL.GetTaskInfo(Session["Username"].ToString());
+            GridView1.DataSource = TaskInfoDAL.GetTaskInfo(ddlFilterByProjectType.SelectedValue, Session["Username"].ToString());
             GridView1.DataBind();
         }
 
@@ -55,38 +72,13 @@ namespace TMS
         // row update event
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            string taskID = (GridView1.Rows[e.RowIndex].FindControl("lblTaskID") as Label).Text;
+            string comment = (GridView1.Rows[e.RowIndex].FindControl("txt_comment") as TextBox).Text;
+            string taskStatus = (GridView1.Rows[e.RowIndex].FindControl("ddlStatusType") as DropDownList).SelectedItem.Value;
 
-            // find student id of edit row
-
-            //string id = GridView1.DataKeys[e.RowIndex].Value.ToString();
-
-            //// find updated values for update
-
-            //TextBox name = (TextBox)GridView1.Rows[e.RowIndex].FindControl("txt_Name");
-
-            //TextBox branch = (TextBox)GridView1.Rows[e.RowIndex].FindControl("txt_Branch");
-
-            //TextBox city = (TextBox)GridView1.Rows[e.RowIndex].FindControl("txt_City");
-
-
-
-            //SqlCommand cmd = new SqlCommand("update tbl_student set Name='" + name.Text + "',
-    
-
-            //                                                  Branch = '"+branch.Text+"', City = '"+city.Text+"' where ID = " +id, con);
-    
-
-            //con.Open();
-
-            //cmd.ExecuteNonQuery();
-
-            //con.Close();
-
-
-
-            //GridView1.EditIndex = -1;
-
-            //BindGridView();
+            TaskInfoDAL.UpdateTaskInfo(taskID, comment, taskStatus);
+            GridView1.EditIndex = -1;
+            BindGridView();
 
         }
 
@@ -98,40 +90,38 @@ namespace TMS
             BindGridView();
         }
 
-        //public SortDirection GridViewSortDirection
-        //{
-        //    get
-        //    {
-        //        if (ViewState["sortDirection"] == null)
-        //            ViewState["sortDirection"] = SortDirection.Ascending;
-        //        return (SortDirection)ViewState["sortDirection"];
-        //    }
-        //    set { ViewState["sortDirection"] = value; }
-        //}
+        protected void ddlFilterByProjectTypePostCheck()
+        {
+            string status = "";
+            if (ddlFilterByProjectType.SelectedValue != "ALL")
+            {
+                status = TaskInfoDAL.GetProjectStatus(ddlFilterByProjectType.SelectedValue);
 
-        //private void SortGridView(string sortExpression, string direction)
-        //{
-        //    if (ViewState[TBL_KEY] == null) return;
+                if (status.ToLower() == "completed" || status.ToLower() == "suspend" || status.ToLower() == "pending")
+                {
+                    GridView1.Columns[0].Visible = false;
+                }
+                else
+                {
+                    GridView1.Columns[0].Visible = true;
+                }
+            }
+            else if (ddlFilterByProjectType.SelectedValue == "ALL" || ddlFilterByProjectType.SelectedValue == "")
+            {
+                GridView1.Columns[0].Visible = false;
+            }
+        }
 
-        //    DataView dv = new DataView((DataTable)ViewState[TBL_KEY]);
-        //    dv.Sort = sortExpression + direction;
-        //}
+        protected void ddlFilterByProjectType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlFilterByProjectTypePostCheck();
+            BindGridView();          
+        }
 
-        //protected void gvFeedback_Sorting(object sender, GridViewSortEventArgs e)
-        //{
-        //    string sortExpression = e.SortExpression;
-
-        //    if (GridViewSortDirection == SortDirection.Ascending)
-        //    {
-        //        GridViewSortDirection = SortDirection.Descending;
-        //        SortGridView(sortExpression, DESCENDING);
-        //    }
-        //    else
-        //    {
-        //        GridViewSortDirection = SortDirection.Ascending;
-        //        SortGridView(sortExpression, ASCENDING);
-        //    }
-        //}
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect(string.Format("~/CreateTask.aspx"));
+        }
 
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -144,27 +134,6 @@ namespace TMS
             catch (Exception ex) { }
         }
 
-        protected void ddlFilterByProjectType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string status = "";
-            if (ddlFilterByProjectType.SelectedValue != "ALL")
-            { 
-                status = TaskInfoDAL.GetProjectStatus(ddlFilterByProjectType.SelectedValue);
-            }
 
-            if(status.ToLower() == "completed" || status.ToLower() == "suspend")
-            {
-                GridView1.Columns[0].Visible = false;
-            }
-            else
-            {
-                GridView1.Columns[0].Visible = true;
-            }
-        }
-
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect(string.Format("~/CreateTask.aspx"));
-        }
     }
 }

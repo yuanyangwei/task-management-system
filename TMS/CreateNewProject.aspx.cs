@@ -14,16 +14,19 @@ namespace TMS
         {
             if (!IsPostBack)
             {
-                
+                ResetTextField();
             }
-
             ValidationBox();
         }
 
         protected void btn_create_Click(object sender, EventArgs e)
         {
-            TaskInfoDAL.CreateNewProject(txtProjectName.Text, txtProjectDesc.Text, ddlProjectStatus.SelectedValue, Session["Username"].ToString());
-            Response.Write("<script language='javascript'>alert('Project has been created successfully!');" + "</script>");
+            if (ValidationBox() == true)
+            {
+                TaskInfoDAL.CreateNewProject(txtProjectName.Text, txtProjectDesc.Text, ddlProjectStatus.SelectedValue, Session["Username"].ToString());
+                ResetTextField();
+                Response.Write("<script language='javascript'>alert('Project has been created successfully!');" + "</script>");
+            }
         }
 
         protected bool ValidationBox()
@@ -40,6 +43,12 @@ namespace TMS
                 return true;
             else
                 return false;
+        }
+
+        protected void ResetTextField()
+        {
+            txtProjectDesc.Text = string.Empty;
+            txtProjectName.Text = string.Empty;
         }
     }
 }

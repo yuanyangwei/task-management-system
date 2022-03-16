@@ -37,12 +37,12 @@
                     </div>
                     <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg);">
                         <div class="user-logo">
-                            <div class="img" style="background-image: url(Image/logo.jpg);"></div>
-                            <h3>Catriona Henderson</h3>
+                            <%--<div class="img" style="background-image: url(Image/Icon.PNG);"></div>--%>
+                           <%-- <h3>Catriona Henderson</h3>--%>
                         </div>
                     </div>
                     <ul class="list-unstyled components mb-5">
-                        <li class="active">
+                        <li>
                             <a href="UserPortfolio"><span class="fa fa-address-card mr-3"></span>User Portfolio</a>
                         </li>
                         <li>

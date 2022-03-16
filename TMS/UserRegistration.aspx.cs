@@ -25,8 +25,6 @@ namespace TMS
                 ResetTextField();
             }
             ValidationBox();
-
-
         }
 
         protected void btn_create_Click(object sender, EventArgs e)
@@ -51,9 +49,9 @@ namespace TMS
 
         protected bool ValidationBox()
         {
-            string username = LoginDAL.CheckUsernameExist(txtUserName.Text.ToLower());
+            string email = LoginDAL.CheckEmailExist(txtEmail.Text.ToLower().Trim());
+            string username = LoginDAL.CheckUsernameExist(txtUserName.Text.ToLower().Trim());
             string contactNo = LoginDAL.CheckContactExist(txtContact.Text);
-            string email = LoginDAL.CheckEmailExist(txtEmail.Text.ToLower());
 
             if (txtContact.Text != "" && txtEmail.Text != "" && txtUserName.Text != "")
             {

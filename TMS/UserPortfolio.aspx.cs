@@ -63,6 +63,17 @@ namespace TMS
                 string selectedDepartment = DataBinder.Eval(e.Row.DataItem, "Department").ToString();
                 ddlDepartment.Items.FindByValue(selectedDepartment).Selected = true;
 
+                DropDownList ddlRoleType = (DropDownList)e.Row.FindControl("ddlRoleType");
+                DataSet ds2 = new DataSet();
+                ds2 = LoginDAL.PopulateRoleType();
+
+                ddlRoleType.DataSource = ds2;
+                ddlRoleType.DataTextField = "roleType";
+                ddlRoleType.DataValueField = "roleType";
+                ddlRoleType.DataBind();
+                string selectedRoleType = DataBinder.Eval(e.Row.DataItem, "roleType").ToString();
+                ddlRoleType.Items.FindByValue(selectedRoleType).Selected = true;
+
             }
         }
          

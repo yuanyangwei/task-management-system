@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TMS.Controller;
 
 namespace TMS
 {
@@ -13,12 +15,41 @@ namespace TMS
         {
             if (!IsPostBack)
             {
+                string RoleType = Session["RoleType"].ToString();
+                if(RoleType != "Manager")
+                {
+                    AssigneeRow.Visible = false;
+                }
                 Calendar1.Visible = false;
                 Calendar2.Visible = false;
+                PopulateProjectName();
+                PopulateAssigneeList();
                 //hide_calendar_row.Visible = false;
             }
         }
 
+        private void PopulateProjectName()
+        {
+            DataSet ds = new DataSet();
+            ds = TaskInfoDAL.GetOngoingProjectList(Session["Username"].ToString());
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                ddlProjectName.Items.Add(ds.Tables[0].Rows[i]["project_name"].ToString());
+            }
+        }
+
+        private void PopulateAssigneeList()
+        {
+            DataSet ds = new DataSet();
+            ds = LoginDAL.PopulateAssigneeList(Session["Username"].ToString());
+
+            ddlAssignee.Items.Add("");
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                ddlAssignee.Items.Add(ds.Tables[0].Rows[i]["full_name"].ToString());
+            }
+        }
 
         protected void ImageButton1_Click1(object sender, ImageClickEventArgs e) 
         {
@@ -50,17 +81,30 @@ namespace TMS
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            txtStart.Text = Convert.ToString(Calendar1.SelectedDate);
+            txtStart.Text = Calendar1.SelectedDate.ToString("yyyy-MM-dd");
+            Calendar1.Visible = false;
         }
 
         protected void Calendar2_SelectionChanged(object sender, EventArgs e)
         {
-            txtEnd.Text = Convert.ToString(Calendar2.SelectedDate);
+            txtEnd.Text = Calendar2.SelectedDate.ToString("yyyy-MM-dd");
+            Calendar2.Visible = false;
         }
 
         protected void btn_create_Click(object sender, EventArgs e)
         {
+            TaskInfoDAL.CreateTask(ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, txtTaskStatus.Text, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, Session["Username"].ToString(), ddlAssignee.SelectedValue);
+            ResetTextField();
+            Response.Write("<script language='javascript'>alert('Task created successfully!');" + "</script>");
+        }
 
+        protected void ResetTextField()
+        {
+            txtTaskName.Text = string.Empty;
+            txtComment.Text = string.Empty;
+            txtDescription.Text = string.Empty;
+            txtStart.Text = string.Empty;
+            txtEnd.Text = string.Empty;
         }
     }
 

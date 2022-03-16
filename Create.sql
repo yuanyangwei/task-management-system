@@ -2,6 +2,9 @@ CREATE TABLE Parameter
 (
      department NVARCHAR(50) NULL,
      position NVARCHAR(50) NULL,
+	 taskStatus NVARCHAR(50) NULL,
+	 projectStatus NVARCHAR(50) NULL,
+	 priority  NVARCHAR(50) NULL,
 );
 
 CREATE TABLE LoginUser
@@ -37,8 +40,8 @@ CREATE TABLE ProjectInfo
      project_id [int] IDENTITY(1,1) NOT NULL UNIQUE, 
      project_name VARCHAR(250) NOT NULL, 
 	 project_des VARCHAR(250) NULL,
-	 project_status VARCHAR(20) NOT NULL,
-	 [department] [nvarchar](250) NOT NULL,
+	 project_status [varchar](max) NOT NULL,
+	 [department] VARCHAR(250) NOT NULL,
 	 creation_date DATETIME NOT NULL DEFAULT GETDATE(),
 	 lastupdate_date DATETIME NOT NULL DEFAULT GETDATE()
 

@@ -102,13 +102,13 @@ namespace TMS.Controller
             string strCommandText = "select department from staff_info where username ='" + username + "'";
             SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
             SqlCommand passComm = new SqlCommand(strCommandText, con);
-            var roleType = passComm.ExecuteScalar();
+            var department = passComm.ExecuteScalar();
             con.Close();
 
-            if (roleType == null)
+            if (department == null)
                 return "";
             else
-                return roleType.ToString();
+                return department.ToString();
         }
 
         public static string getCustNameByEmail(string email)
@@ -125,6 +125,36 @@ namespace TMS.Controller
             else
                 return custname.ToString();
         }
+        public static string getEmailByUsername(string username)
+        {
+            con.Open();
+            string strCommandText = "select email from staff_info where username ='" + username + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var custname = passComm.ExecuteScalar();
+            con.Close();
+
+            if (custname == null)
+                return "";
+            else
+                return custname.ToString();
+        }
+
+        public static string getContactByUsername(string username)
+        {
+            con.Open();
+            string strCommandText = "select phone_no from staff_info where username ='" + username + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var custname = passComm.ExecuteScalar();
+            con.Close();
+
+            if (custname == null)
+                return "";
+            else
+                return custname.ToString();
+        }
+
 
         public static string getUserNameByEmail(string email)
         {
@@ -209,14 +239,28 @@ namespace TMS.Controller
         {
             con.Open();
             string strCommandText = "SELECT department FROM Parameter WHERE department IS NOT NULL ORDER BY department ASC";
-            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlDataAdapter myeInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
             DataSet myDS = new DataSet();
-            myProjectNameInfoAdapter.Fill(myDS);
+            myeInfoAdapter.Fill(myDS);
             //Bind the data read to the gridview control         
             return myDS;
         }
+
+        public static DataSet PopulateRoleType() //get all feedback status is Pending
+        {
+            con.Open();
+            string strCommandText = "SELECT roleType FROM Parameter WHERE roleType IS NOT NULL ORDER BY roleType ASC";
+            SqlDataAdapter myeInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myeInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
 
         public static DataSet PopulatePosition() //get all feedback status is Pending
         {
@@ -244,10 +288,54 @@ namespace TMS.Controller
             return myDS;
         }
 
+        public static DataSet GetUserInfoByUsername(string username) //get all feedback status is Pending
+        {
+            con.Open();
+            string strCommandText = "SELECT employee_id, email, full_name, phone_no, position, department FROM staff_info where username ='" + username + "'";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet PopulateAssigneeList(string username) //get all feedback status is Pending
+        {
+            string department = LoginDAL.getDepartmentName(username);
+
+            con.Open();
+            string strCommandText = "SELECT full_name FROM staff_info WHERE department = '" + department + "' ORDER BY full_name ASC";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+
         public static string CheckUsernameExist(string username)
         {
             con.Open();
             string strCommandText = "select username from staff_info where username ='" + username + "'"; 
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            SqlCommand passComm = new SqlCommand(strCommandText, con);
+            var name = passComm.ExecuteScalar();
+            con.Close();
+
+            if (name == null)
+                return "";
+            else
+                return name.ToString();
+        }
+
+        public static string GetFullNameByUsername(string username)
+        {
+            con.Open();
+            string strCommandText = "select full_name from staff_info where username ='" + username + "'";
             SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
             SqlCommand passComm = new SqlCommand(strCommandText, con);
             var name = passComm.ExecuteScalar();
@@ -320,124 +408,28 @@ namespace TMS.Controller
             myAdapter1.Fill(myDS1);
             //Bind the data read to the gridview control
         }
-        //public static DataSet GetAllCustInfo() //get all feedback status is Pending
-        //{
-        //    con.Open();
-        //    string strCommandText = "SELECT username,password,fName,lName,nationality,finNRIC,FORMAT(dateOfBirth, 'yyyy-MM-dd') as dateOfBirth,contact,emailAddress,FORMAT(submissionDate, 'yyyy-MM-dd') as submissionDate, FORMAT(lastUpdateDate, 'yyyy-MM-dd') as lastUpdateDate FROM CustomerInfo";
-        //    SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
-        //    con.Close();
 
-        //    DataSet myDS = new DataSet();
-        //    mycustInfoAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control         
-        //    return myDS;
-        //}
+        public static void UpdateUserProfile(string email, string phone_no, string username)
+        {
+            con.Open();
+            // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
 
-        //public static void UpdateCustInfobyID(string username, string contact, string password, string email) //get all feedback status is Pending
-        //{
-        //    con.Open();
-        //    // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
+            string strCommandText = "UPDATE staff_info SET email = @email, phone_no = @phone_no WHERE username = @username";
+            SqlCommand cmd = new SqlCommand(strCommandText, con);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@phone_no", phone_no);
+            cmd.Parameters.AddWithValue("@username", username);
 
-        //    string strCommandText = "UPDATE CustomerInfo SET contact = @contact, lastUpdateDate = @lastUpdateDate, emailAddress = @emailAddress, password = @password WHERE username = @username";
-        //    SqlCommand cmd = new SqlCommand(strCommandText, con);
-        //    cmd.Parameters.AddWithValue("@username", username);
-        //    cmd.Parameters.AddWithValue("@contact", contact);
-        //    cmd.Parameters.AddWithValue("@password", password);
-        //    cmd.Parameters.AddWithValue("@emailAddress", email);
-        //    cmd.Parameters.AddWithValue("@lastUpdateDate", DateTime.Today);
+            //Create Adaptder
+            SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
+            con.Close();
 
-        //    //Create Adaptder
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
-        //    con.Close();
+            //Create Dataset to store results of query
+            DataSet myDS = new DataSet();
+            //Fill the dataset with the results
+            myAdapter.Fill(myDS);
+            //Bind the data read to the gridview control
+        }
 
-        //    //Create Dataset to store results of query
-        //    DataSet myDS = new DataSet();
-        //    //Fill the dataset with the results
-        //    myAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control
-        //}
-
-        //public static void UpdateCustLoginInfobyID(string userID, string password)
-        //{
-        //    con.Open();
-        //    string strCommandText = "Update Login SET password = @password where userId = @userID";
-        //    SqlCommand cmd = new SqlCommand(strCommandText, con);
-        //    cmd.Parameters.AddWithValue("userID", userID);
-        //    cmd.Parameters.AddWithValue("password", password);
-
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
-        //    con.Close();
-
-        //    //Create Dataset to store results of query
-        //    DataSet myDS = new DataSet();
-        //    //Fill the dataset with the results
-        //    myAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control
-        //}
-
-        //public static void CreateFavoriteList(string username, int appListID, string lodgementDate, string expiryDate, string appType, string appProductName)
-        //{
-        //    string strCommandText = "INSERT INTO FavoriteList(appListID,appLodgementDate,expiryDate,username,appType,appProductName) VALUES (@appListID,@appLodgementDate,@expiryDate,@username,@appType,@appProductName)";
-
-        //    SqlCommand myCommand = new SqlCommand(strCommandText, con);
-        //    myCommand.Parameters.AddWithValue("@appListID", appListID);
-        //    myCommand.Parameters.AddWithValue("@appLodgementDate", lodgementDate);
-        //    myCommand.Parameters.AddWithValue("@expiryDate", expiryDate);
-        //    myCommand.Parameters.AddWithValue("@username", username);
-        //    myCommand.Parameters.AddWithValue("@appType", appType);
-        //    myCommand.Parameters.AddWithValue("@appProductName", appProductName);
-
-        //    con.Open();
-        //    myCommand.ExecuteNonQuery();
-        //    con.Close();
-        //}
-
-        //public static string GetFavList(string username, int appListID, string lodgementDate, string expiryDate, string appType, string appProductName) //get all feedback status is Pending
-        //{
-        //    con.Open();
-        //    string strCommandText = "select appListID from FavoriteList where username ='" + username + "' and appListID = '" + appListID + "' and appLodgementDate = '" + lodgementDate + "' and expiryDate = '" + expiryDate + "' and appType = '" + appType + "' and appProductName = '" + appProductName + "'";
-        //    SqlCommand passComm = new SqlCommand(strCommandText, con);
-        //    var appListID1 = passComm.ExecuteScalar();
-        //    con.Close();
-
-        //    if (appListID1 == null)
-        //        return "";
-        //    else
-        //        return appListID1.ToString();
-        //}
-
-        //public static DataSet GetFavListByUsername(string username) //get all feedback status is Pending
-        //{
-        //    con.Open();
-        //    string strCommandText = "select appListID,FORMAT(appLodgementDate, 'yyyy-MM-dd') as appLodgementDate, FORMAT(expiryDate, 'yyyy-MM-dd') as expiryDate,appType,appProductName from FavoriteList where username ='" + username + "'";
-        //    SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
-        //    con.Close();
-
-        //    DataSet myDS = new DataSet();
-        //    mycustInfoAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control         
-        //    return myDS;
-        //}
-        //public static void RemoveFavbyID(string username, string appListID, string lodgementDate, string expiryDate, string appType, string appProductName)
-        //{
-        //    con.Open();
-        //    string strCommandText = "Delete from FavoriteList where username = @username and appListID = @appListID and expiryDate = @expiryDate and appLodgementDate = @appLodgementDate and appType = @appType and appProductName = @appProductName";
-        //    SqlCommand cmd = new SqlCommand(strCommandText, con);
-        //    cmd.Parameters.AddWithValue("username", username);
-        //    cmd.Parameters.AddWithValue("appListID", appListID);
-        //    cmd.Parameters.AddWithValue("expiryDate", expiryDate);
-        //    cmd.Parameters.AddWithValue("appLodgementDate", lodgementDate);
-        //    cmd.Parameters.AddWithValue("appType", appType);
-        //    cmd.Parameters.AddWithValue("appProductName", appProductName);
-
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
-        //    con.Close();
-
-        //    //Create Dataset to store results of query
-        //    DataSet myDS = new DataSet();
-        //    //Fill the dataset with the results
-        //    myAdapter.Fill(myDS);
-        //    //Bind the data read to the gridview control
-        //}
     }
 }

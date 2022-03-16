@@ -1,6 +1,6 @@
-﻿<%@ Page Title="DashBoard" Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="DashBoard.aspx.cs" Inherits="TMS.DashBoard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="ManagerDashBoard.aspx.cs" Inherits="TMS.ManagerDashBoard" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="CSS/GridViewStyle.css" />
     <link rel="stylesheet" href="CSS/DDLPopUpStyle.css" />
 
@@ -13,18 +13,14 @@
             <asp:ImageButton ID="ImageButton1" runat="server" Style="" AlternateText="Add Task" Height="34px" ImageUrl="~/Image/AddTask.png" Width="40px" ImageAlign="Bottom" OnClick="ImageButton1_Click" />
         </div>
 
-        <asp:GridView ID="GridView1" runat="server" CssClass="mydatagrid" PagerStyle-CssClass="pager" AutoGenerateColumns="false" DataKeyNames="task_id" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDataBound="RowDataBound"
-            HeaderStyle-CssClass="header" RowStyle-CssClass="rows" AllowPaging="True" ShowHeaderWhenEmpty="true" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnPageIndexChanging="GridView1_PageIndexChanging">
+        <asp:GridView ID="GridView1" runat="server" CssClass="mydatagrid" PagerStyle-CssClass="pager" AutoGenerateColumns="false" DataKeyNames="task_id" 
+            HeaderStyle-CssClass="header" RowStyle-CssClass="rows" AllowPaging="True" ShowHeaderWhenEmpty="true" OnRowCommand="GridView1_RowCommand"  OnPageIndexChanging="GridView1_PageIndexChanging">
             <Columns>
                 <asp:TemplateField>
                     <ItemStyle Width="50px" />
                     <ItemTemplate>
                         <asp:LinkButton ID="LkB1" runat="server" CommandName="Edit">Edit</asp:LinkButton>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:LinkButton ID="LB2" runat="server" CommandName="Update">Update</asp:LinkButton>
-                        <asp:LinkButton ID="LB3" runat="server" CommandName="Cancel">Cancel</asp:LinkButton>
-                    </EditItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Task ID" Visible="false">
@@ -60,9 +56,13 @@
                     <ItemTemplate>
                         <asp:Label ID="Label9" runat="server" Text='<%# Eval("task_comment" ) %>'></asp:Label>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:TextBox ID="txt_comment" runat="server" TextMode="MultiLine" Style="background-color: #F6F1DB; color: black" Text='<%#Eval("task_comment") %>' Width="200px" Height="20px"></asp:TextBox>
-                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Assignee">
+                    <ItemStyle Width="120px" />
+                    <ItemTemplate>
+                        <asp:Label ID="lblAssignee" runat="server" Text='<%# Eval("assignee" ) %>'></asp:Label>
+                    </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Task Status">
@@ -70,10 +70,6 @@
                     <ItemTemplate>
                         <asp:Label ID="Label4" runat="server" Text='<%# Eval("task_status" ) %>'></asp:Label>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:DropDownList ID="ddlStatusType" runat="server" BackColor="#F6F1DB" ForeColor="Black">
-                        </asp:DropDownList>
-                    </EditItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Priority">

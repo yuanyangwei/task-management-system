@@ -11,26 +11,26 @@ namespace TMS
 {
 
 
-    public partial class ViewProjectList
+    public partial class ManagerDashBoard
     {
 
         /// <summary>
-        /// btnUnarchived control.
+        /// ddlFilterByProjectType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnUnarchived;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFilterByProjectType;
 
         /// <summary>
-        /// btnArchived control.
+        /// ImageButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnArchived;
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
 
         /// <summary>
         /// GridView1 control.

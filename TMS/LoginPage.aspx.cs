@@ -25,6 +25,9 @@ namespace TMS
             Session["accountType"] = accountType;
             Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
             Session["RoleType"] = LoginDAL.getRoleType(txtUsername.Text);
+            //Session["DueTaskCount"] = 
+            //Session["NewTaskCount"] =
+
 
             if (accountType.ToLower() == "user")
             {
