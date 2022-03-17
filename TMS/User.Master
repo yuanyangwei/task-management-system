@@ -33,7 +33,7 @@
                 <nav id="sidebar">
                     <div class="custom-menu">
                     </div>
-                    <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg);">
+                    <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg); height:127px;">
                         <div class="user-logo">
                             <%--<div class="img" style="background-image: url(Image/Icon.PNG);"></div>--%>
                             <%--<h3>Catriona Henderson</h3>--%>
@@ -71,11 +71,11 @@
                         <%} %>
 
                         <li>
-                            <a href="#"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Due Date Reminder</a>
+                            <a href="DueTaskReminderList"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center"><%:Session["DueTaskCount"]%></small></span> Due Date Reminder</a>
                         </li>
 
                         <li>
-                            <a href="#"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span>New Task</a>
+                            <a href="NewTaskReminderList"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center"><%:Session["NewTaskCount"]%></small></span>New Task Reminder</a>
                         </li>
 
                         <li>

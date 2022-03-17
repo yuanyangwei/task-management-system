@@ -9,7 +9,7 @@ using TMS.Controller;
 
 namespace TMS
 {
-    public partial class DashBoard : Page
+    public partial class NewTaskReminderList : System.Web.UI.Page
     {
         private static readonly string TBL_KEY = "tbl";
         private const string ASCENDING = " ASC";
@@ -19,23 +19,10 @@ namespace TMS
         {
             if (!IsPostBack)
             {
-                PopulateProjectName();
-                ddlFilterByProjectTypePostCheck();
                 BindGridView();
             }
         }
 
-        private void PopulateProjectName()
-        {
-            DataSet ds = new DataSet();
-            ds = TaskInfoDAL.PopulateProjectName(Session["Username"].ToString());
-            ddlFilterByProjectType.Items.Add("ALL");
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                ddlFilterByProjectType.Items.Add(ds.Tables[0].Rows[i]["project_name"].ToString());
-            }
-        }
 
         //method for binding GridView
 
@@ -58,7 +45,7 @@ namespace TMS
 
         protected void BindGridView()
         {
-            GridView1.DataSource = TaskInfoDAL.GetTaskInfo(ddlFilterByProjectType.SelectedValue, Session["Username"].ToString());
+            GridView1.DataSource = TaskInfoDAL.GetPendingTaskInfo(Session["Username"].ToString());
             GridView1.DataBind();
         }
 
@@ -92,34 +79,6 @@ namespace TMS
             BindGridView();
         }
 
-        protected void ddlFilterByProjectTypePostCheck()
-        {
-            string status = "";
-            if (ddlFilterByProjectType.SelectedValue != "ALL")
-            {
-                status = TaskInfoDAL.GetProjectStatus(ddlFilterByProjectType.SelectedValue);
-
-                if (status.ToLower() == "completed" || status.ToLower() == "suspend" || status.ToLower() == "pending")
-                {
-                    GridView1.Columns[0].Visible = false;
-                }
-                else
-                {
-                    GridView1.Columns[0].Visible = true;
-                }
-            }
-            else if (ddlFilterByProjectType.SelectedValue == "ALL" || ddlFilterByProjectType.SelectedValue == "")
-            {
-                GridView1.Columns[0].Visible = false;
-            }
-        }
-
-        protected void ddlFilterByProjectType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ddlFilterByProjectTypePostCheck();
-            BindGridView();          
-        }
-
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect(string.Format("~/CreateTask.aspx"));
@@ -135,7 +94,5 @@ namespace TMS
             }
             catch (Exception ex) { }
         }
-
-
     }
 }

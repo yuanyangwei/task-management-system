@@ -37,12 +37,98 @@ namespace TMS.Controller
             //Bind the data read to the gridview control         
             return myDS;
         }
+
+        public static DataSet GetPendingTaskInfo(string username)
+        {
+            con.Open();
+            string assignee = LoginDAL.GetFullNameByUsername(username);
+            string strCommandText = "";
+           
+            strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE task_status = 'Pending' and assignee ='" + assignee + "' ORDER BY project_name ASC";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            mycustInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet GetOverdueTaskInfo(string username)
+        {
+            con.Open();
+            string assignee = LoginDAL.GetFullNameByUsername(username);
+            string strCommandText = "";
+
+            strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assignee = '" + assignee + "' AND task_status <> 'Completed' AND task_status <> 'Pending' AND due_date IS NOT NULL AND (due_date < GETDATE() OR DATEADD(DAY, -3, due_date) <= GETDATE()) ORDER BY project_name ASC";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            mycustInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+
+        public static DataSet GetManagerTaskInfo(string projectName, string username)
+        {
+            con.Open();
+            string assigner = LoginDAL.GetFullNameByUsername(username);
+            string strCommandText = "";
+            if (projectName == "ALL")
+            {
+                strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assigner ='" + assigner + "' ORDER BY project_name ASC";
+
+            }
+            else
+            {
+                strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE project_name = '" + projectName + "' and assigner ='" + assigner + "' ORDER BY project_name ASC";
+
+            }
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            mycustInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet GetManagerTaskInfoById(string id)
+        {
+            con.Open();
+            string strCommandText = "";
         
+            strCommandText = "SELECT task_id, T.project_id, project_name, task_name, task_desc, task_comment, task_status, priority, FORMAT(start_date, 'yyyy-MM-dd') as start_date, FORMAT(due_date, 'yyyy-MM-dd') as due_date, assigner, assignee FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id where task_id ='" + id + "'";
+            SqlDataAdapter mycustInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            mycustInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
         public static DataSet PopulateProjectName(string username) // Need Change
         {
             con.Open();
             string assignee = LoginDAL.GetFullNameByUsername(username);
             string strCommandText = "SELECT DISTINCT T.project_id, project_name FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assignee ='" + assignee + "' ORDER BY project_name ASC";
+            SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
+            con.Close();
+
+            DataSet myDS = new DataSet();
+            myProjectNameInfoAdapter.Fill(myDS);
+            //Bind the data read to the gridview control         
+            return myDS;
+        }
+
+        public static DataSet PopulateManagerProjectName(string username) // Need Change
+        {
+            con.Open();
+            string assigner = LoginDAL.GetFullNameByUsername(username);
+            string strCommandText = "SELECT DISTINCT T.project_id, project_name FROM TaskInfo T INNER JOIN ProjectInfo P on P.project_id = T.project_id WHERE assigner ='" + assigner + "' ORDER BY project_name ASC";
             SqlDataAdapter myProjectNameInfoAdapter = new SqlDataAdapter(strCommandText, con);
             con.Close();
 
@@ -93,10 +179,12 @@ namespace TMS.Controller
             return myDS;
         }
 
-        public static string GetTaskDueCount(string ProjectName)
+        public static string GetTaskDueCount(string username)
         {
+            string assignee = LoginDAL.GetFullNameByUsername(username);
+
             con.Open();
-            string strCommandText = "SELECT DISTINCT project_status FROM ProjectInfo WHERE project_name ='" + ProjectName + "' ORDER BY project_status ASC";
+            string strCommandText = "SELECT COUNT(*) FROM TaskInfo WHERE assignee = '" + assignee + "' AND task_status <> 'Completed' AND task_status <> 'Pending' AND due_date IS NOT NULL AND (due_date < GETDATE() OR DATEADD(DAY, -3, due_date) <= GETDATE())";
             SqlDataAdapter myprojectStatusInfoAdapter = new SqlDataAdapter(strCommandText, con);
             SqlCommand passComm = new SqlCommand(strCommandText, con);
             var status = passComm.ExecuteScalar();
@@ -125,8 +213,10 @@ namespace TMS.Controller
 
         public static string GetNewTaskCount(string username)
         {
+            string assignee = LoginDAL.GetFullNameByUsername(username);
+
             con.Open();
-            string strCommandText = "SELECT COUNT(*) FROM TaskInfo WHERE assignee = '" + username + "' AND task_status = 'Pending'";
+            string strCommandText = "SELECT COUNT(*) FROM TaskInfo WHERE assignee = '" + assignee + "' AND task_status = 'Pending'";
             SqlDataAdapter myprojectStatusInfoAdapter = new SqlDataAdapter(strCommandText, con);
             SqlCommand passComm = new SqlCommand(strCommandText, con);
             var status = passComm.ExecuteScalar();
@@ -244,8 +334,16 @@ namespace TMS.Controller
             myCommand.Parameters.AddWithValue("@task_comment", task_comment);
             myCommand.Parameters.AddWithValue("@task_status", task_status);
             myCommand.Parameters.AddWithValue("@priority", priority);
-            myCommand.Parameters.AddWithValue("@start_date", start_date1);
-            myCommand.Parameters.AddWithValue("@due_date", due_date1);
+            if(start_date1 == null)
+                myCommand.Parameters.AddWithValue("@start_date", DBNull.Value);
+            else
+                myCommand.Parameters.AddWithValue("@start_date", start_date1);
+
+            if (due_date1 == null)
+                myCommand.Parameters.AddWithValue("@due_date", DBNull.Value);
+            else
+                myCommand.Parameters.AddWithValue("@due_date", due_date1);
+
             myCommand.Parameters.AddWithValue("@assigner", assignerFullName);
             myCommand.Parameters.AddWithValue("@assignee", assignee);
             con.Open();
@@ -274,6 +372,60 @@ namespace TMS.Controller
             myAdapter.Fill(myDS);
             //Bind the data read to the gridview control
         }
+
+        public static void UpdateManagerTaskInfoByID(string task_id, string projectName, string task_name, string task_desc, string task_comment, string task_status, string priority, string start_date, string due_date, string assignee)
+        {
+            string project_id = TaskInfoDAL.GetProjectID(projectName);
+            DateTime? start_date1 = null;
+            DateTime? due_date1 = null;
+
+            IFormatProvider culture = new CultureInfo("en-US", true);
+
+            if (start_date != "" && start_date != null)
+            {
+                start_date1 = DateTime.Parse(start_date, culture);
+            }
+
+            if (due_date != "" && due_date != null)
+            {
+                due_date1 = DateTime.Parse(due_date, culture);
+            }
+
+            con.Open();
+            // TODO use SqlCommand, write an update statement using CustUserName and newEmail, then executeNonQuery()
+
+            string strCommandText = "UPDATE TaskInfo SET project_id = @project_id, task_name = @task_name, task_desc = @task_desc, task_comment = @task_comment, task_status = @task_status, priority = @priority, start_date = @start_date, due_date = @due_date, assignee = @assignee WHERE task_id = @task_id";
+            SqlCommand cmd = new SqlCommand(strCommandText, con);
+            cmd.Parameters.AddWithValue("@project_id", project_id);
+            cmd.Parameters.AddWithValue("@task_name", task_name);
+            cmd.Parameters.AddWithValue("@task_desc", task_desc);
+            cmd.Parameters.AddWithValue("@task_comment", task_comment);
+            cmd.Parameters.AddWithValue("@task_status", task_status);
+            cmd.Parameters.AddWithValue("@priority", priority);
+            if (start_date1 == null)
+                cmd.Parameters.AddWithValue("@start_date", DBNull.Value);
+            else
+                cmd.Parameters.AddWithValue("@start_date", start_date1);
+
+            if (due_date1 == null)
+                cmd.Parameters.AddWithValue("@due_date", DBNull.Value);
+            else
+                cmd.Parameters.AddWithValue("@due_date", due_date1);
+
+            cmd.Parameters.AddWithValue("@assignee", assignee);
+            cmd.Parameters.AddWithValue("@task_id", task_id);
+
+            //Create Adaptder
+            SqlDataAdapter myAdapter = new SqlDataAdapter(cmd);
+            con.Close();
+
+            //Create Dataset to store results of query
+            DataSet myDS = new DataSet();
+            //Fill the dataset with the results
+            myAdapter.Fill(myDS);
+            //Bind the data read to the gridview control
+        }
+
 
         public static void UpdateProjectInfo(string project_id, string projectStatus, string projectDesc)
         {

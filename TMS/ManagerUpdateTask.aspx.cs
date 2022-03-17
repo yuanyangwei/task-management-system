@@ -9,33 +9,31 @@ using TMS.Controller;
 
 namespace TMS
 {
-    public partial class CreateTask : System.Web.UI.Page
+    public partial class ManagerUpdateTask : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!Page.IsPostBack)
             {
-                string RoleType = Session["RoleType"].ToString();
-                if(RoleType != "Manager")
-                {
-                    AssigneeRow.Visible = false;
-                }
+                string id = Request.QueryString["id"];
+
                 Calendar1.Visible = false;
                 Calendar2.Visible = false;
                 PopulateProjectName();
                 PopulateAssigneeList();
-                //hide_calendar_row.Visible = false;
-            }
-        }
 
-        private void PopulateProjectName()
-        {
-            DataSet ds = new DataSet();
-            ds = TaskInfoDAL.GetOngoingProjectList(Session["Username"].ToString());
+                DataSet ds = new DataSet();
+                ds = TaskInfoDAL.GetManagerTaskInfoById(id);
 
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                ddlProjectName.Items.Add(ds.Tables[0].Rows[i]["project_name"].ToString());
+                ddlProjectName.SelectedValue = ds.Tables[0].Rows[0]["project_name"].ToString();
+                txtTaskName.Text = ds.Tables[0].Rows[0]["task_name"].ToString();
+                txtComment.Text = ds.Tables[0].Rows[0]["task_comment"].ToString();
+                ddlTaskStatus.SelectedValue = ds.Tables[0].Rows[0]["task_status"].ToString();
+                txtDescription.Text = ds.Tables[0].Rows[0]["task_desc"].ToString();
+                ddlPriority.SelectedValue = ds.Tables[0].Rows[0]["priority"].ToString();
+                ddlAssignee.SelectedValue = ds.Tables[0].Rows[0]["assignee"].ToString();
+                txtStart.Text = ds.Tables[0].Rows[0]["start_date"].ToString();
+                txtEnd.Text = ds.Tables[0].Rows[0]["due_date"].ToString();
             }
         }
 
@@ -51,7 +49,19 @@ namespace TMS
             }
         }
 
-        protected void ImageButton1_Click1(object sender, ImageClickEventArgs e) 
+        private void PopulateProjectName()
+        {
+            DataSet ds = new DataSet();
+            ds = TaskInfoDAL.GetOngoingProjectList(Session["Username"].ToString());
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                ddlProjectName.Items.Add(ds.Tables[0].Rows[i]["project_name"].ToString());
+            }
+        }
+
+
+        protected void ImageButton1_Click1(object sender, ImageClickEventArgs e)
         {
             if (Calendar1.Visible == false)
             {
@@ -91,23 +101,15 @@ namespace TMS
             Calendar2.Visible = false;
         }
 
-        protected void btn_create_Click(object sender, EventArgs e)
+        protected void btn_Update_Click(object sender, EventArgs e)
         {
-            TaskInfoDAL.CreateTask(ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, txtTaskStatus.Text, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, Session["Username"].ToString(), ddlAssignee.SelectedValue);
-            ResetTextField();
+            string id = Request.QueryString["id"];
+            TaskInfoDAL.UpdateManagerTaskInfoByID(id, ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, ddlTaskStatus.SelectedValue, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, ddlAssignee.SelectedValue);
             Session["NewTaskCount"] = TaskInfoDAL.GetNewTaskCount(Session["Username"].ToString());
             Session["DueTaskCount"] = TaskInfoDAL.GetTaskDueCount(Session["Username"].ToString());
-            Response.Write("<script language='javascript'>alert('Task created successfully!');" + "</script>");
+            Response.Write("<script language='javascript'>alert('Task updated successfully!');" + "</script>");
+            Response.Redirect(string.Format("~/ManagerDashBoard.aspx"));
         }
 
-        protected void ResetTextField()
-        {
-            txtTaskName.Text = string.Empty;
-            txtComment.Text = string.Empty;
-            txtDescription.Text = string.Empty;
-            txtStart.Text = string.Empty;
-            txtEnd.Text = string.Empty;
-        }
     }
-
 }

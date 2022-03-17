@@ -119,6 +119,7 @@
     <Content Include="CSS\LoginStyle.css" />
     <Content Include="CSS\MainMasterStyle.css" />
     <Content Include="CSS\MasterPage.css" />
+    <Content Include="DueTaskReminderList.aspx" />
     <Content Include="EmailTemplateNewAcctPassword.html" />
     <Content Include="EmailTemplateResetPassword.html" />
     <Content Include="favicon.ico" />
@@ -146,6 +147,8 @@
     <Content Include="Image\ongoingIcon.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="ManagerDashBoard.aspx" />
+    <Content Include="ManagerUpdateTask.aspx" />
+    <Content Include="NewTaskReminderList.aspx" />
     <Content Include="PasswordReset.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -239,6 +242,13 @@
     <Compile Include="DashBoard.aspx.designer.cs">
       <DependentUpon>DashBoard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DueTaskReminderList.aspx.cs">
+      <DependentUpon>DueTaskReminderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DueTaskReminderList.aspx.designer.cs">
+      <DependentUpon>DueTaskReminderList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ForgetPassword.aspx.cs">
       <DependentUpon>ForgetPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -262,6 +272,20 @@
     </Compile>
     <Compile Include="ManagerDashBoard.aspx.designer.cs">
       <DependentUpon>ManagerDashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerUpdateTask.aspx.cs">
+      <DependentUpon>ManagerUpdateTask.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManagerUpdateTask.aspx.designer.cs">
+      <DependentUpon>ManagerUpdateTask.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewTaskReminderList.aspx.cs">
+      <DependentUpon>NewTaskReminderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewTaskReminderList.aspx.designer.cs">
+      <DependentUpon>NewTaskReminderList.aspx</DependentUpon>
     </Compile>
     <Compile Include="PasswordReset.aspx.cs">
       <DependentUpon>PasswordReset.aspx</DependentUpon>

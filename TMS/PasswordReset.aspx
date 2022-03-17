@@ -55,7 +55,7 @@
                         </asp:CompareValidator>
                     </asp:TableCell></asp:TableRow></asp:Table><br />
         </fieldset>
-          <br />
+            <br />
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" Font-Size="Medium" />
         <asp:Button ID="btn_update" runat="server" BackColor="#163a55" OnClick="btn_update_Click" Text="Update" BorderColor="#163A55" Font-Bold="True" ForeColor="White" Width="160px" Height="40px" class="btn btn-light" /><br />
     </div>

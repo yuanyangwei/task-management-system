@@ -59,28 +59,6 @@ namespace TMS
                 return true;
             else
                 return false;
-
-            //if (txtContact.Text != "" && txtEmail.Text != "")
-            //{
-            //    RequiredFieldValidator9.InitialValue = email;
-            //    RequiredFieldValidator9.ErrorMessage = "Email adddress has been registered, please use another Email!";
-            //    RequiredFieldValidator3.InitialValue = contactNo;
-            //    RequiredFieldValidator3.ErrorMessage = "Contact number has been registered, please use another contact number!";
-            //}
-
-            //if (txtContact.Text != LoginDAL.getContactByUsername(Session["Username"].ToString()) && contactNo == "" || txtEmail.Text != LoginDAL.getEmailByUsername(Session["Username"].ToString()) && email == "")
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
-            //if (contactNo == "" && email == "") //all new value
-            //    return true;
-            //else
-            //    return false;
         }
 
         protected void PopulateData()

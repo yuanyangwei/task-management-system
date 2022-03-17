@@ -25,8 +25,8 @@ namespace TMS
             Session["accountType"] = accountType;
             Session["Username"] = LoginDAL.getUsername(txtUsername.Text, passwordfield.Text);
             Session["RoleType"] = LoginDAL.getRoleType(txtUsername.Text);
-            //Session["DueTaskCount"] = 
-            //Session["NewTaskCount"] =
+            Session["DueTaskCount"] = TaskInfoDAL.GetTaskDueCount(Session["Username"].ToString());
+            Session["NewTaskCount"] = TaskInfoDAL.GetNewTaskCount(Session["Username"].ToString());
 
 
             if (accountType.ToLower() == "user")
@@ -36,7 +36,13 @@ namespace TMS
                     Response.Redirect(string.Format("~/PasswordReset.aspx"));
                 }
 
-                Response.Redirect(string.Format("~/DashBoard.aspx"));
+                if(Session["RoleType"].ToString() == "Manager")
+                {
+                    Response.Redirect(string.Format("~/ManagerDashBoard.aspx"));
+
+                }
+                else
+                    Response.Redirect(string.Format("~/DashBoard.aspx"));
 
             }
             else if (accountType.ToLower() == "admin")

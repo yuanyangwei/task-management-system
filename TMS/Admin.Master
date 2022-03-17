@@ -35,7 +35,7 @@
                         <%--<button type="button" id="sidebarCollapse" class="btn btn-primary">
                         </button>--%>
                     </div>
-                    <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg);">
+                    <div class="img bg-wrap text-center py-4" style="background-image: url(Image/bg_1.jpg); height:127px;">
                         <div class="user-logo">
                             <%--<div class="img" style="background-image: url(Image/Icon.PNG);"></div>--%>
                            <%-- <h3>Catriona Henderson</h3>--%>
