@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Configuration;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -29,13 +30,23 @@ namespace TMS
 
         protected void btn_create_Click(object sender, EventArgs e)
         {
-            if(ValidationBox() == true)
+            if (ValidationBox() == true)
             {
-                string newpassword = GetRandomString();
-                LoginDAL.CreateUser(txtEmail.Text.ToLower(), txtFName.Text, txtContact.Text, ddlDesignation.SelectedValue, ddlDepartment.SelectedValue, ddlRoleType.SelectedValue, txtUserName.Text.ToLower(), newpassword, ddlAccessType.SelectedValue);
-                SendMail(txtEmail.Text.ToLower(), newpassword, txtFName.Text);
-                ResetTextField();
-                Response.Write("<script language='javascript'>alert('Account has been set up successfully!');" + "</script>");
+                Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                bool isValidEmail = regex.IsMatch(txtEmail.Text);
+                if (!isValidEmail && txtEmail.Text != "")
+                {
+                    Response.Write("<script language='javascript'>alert('Invalid email address!');" + "</script>");
+                }
+                else 
+                { 
+                    string newpassword = GetRandomString();
+                    LoginDAL.CreateUser(txtEmail.Text.ToLower(), txtFName.Text, txtContact.Text, ddlDesignation.SelectedValue, ddlDepartment.SelectedValue, ddlRoleType.SelectedValue, txtUserName.Text.ToLower(), newpassword, ddlAccessType.SelectedValue);
+                    SendMail(txtEmail.Text.ToLower(), newpassword, txtFName.Text);
+                    ResetTextField();
+                    Response.Write("<script language='javascript'>alert('Account has been set up successfully!');" + "</script>");
+                }
             }   
         }
 

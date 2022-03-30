@@ -91,6 +91,7 @@ namespace TMS
             else
                 account_status = "false";
             string username = (GridView1.Rows[e.RowIndex].FindControl("lblUsername") as Label).Text;
+
             LoginDAL.UpdateUserInfo(designation, department, roleType, account_status, username);
             GridView1.EditIndex = -1;
             BindGridView();

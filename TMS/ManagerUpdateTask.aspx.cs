@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -103,12 +104,38 @@ namespace TMS
 
         protected void btn_Update_Click(object sender, EventArgs e)
         {
+            DateTime? start_date1 = null;
+            DateTime? due_date1 = null;
+
+            IFormatProvider culture = new CultureInfo("en-US", true);
+
             string id = Request.QueryString["id"];
-            TaskInfoDAL.UpdateManagerTaskInfoByID(id, ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, ddlTaskStatus.SelectedValue, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, ddlAssignee.SelectedValue);
-            Session["NewTaskCount"] = TaskInfoDAL.GetNewTaskCount(Session["Username"].ToString());
-            Session["DueTaskCount"] = TaskInfoDAL.GetTaskDueCount(Session["Username"].ToString());
-            Response.Write("<script language='javascript'>alert('Task updated successfully!');" + "</script>");
-            Response.Redirect(string.Format("~/ManagerDashBoard.aspx"));
+            if (txtStart.Text != "" && txtStart.Text != null && txtEnd.Text != "" && txtEnd.Text != null)
+            {
+                start_date1 = DateTime.Parse(txtStart.Text, culture);
+                due_date1 = DateTime.Parse(txtEnd.Text, culture);
+
+                if (start_date1 >= due_date1)
+                {
+                    Response.Write("<script language='javascript'>alert('Start date cannot be later than Due Date!');" + "</script>");
+                }
+                else
+                {
+                    TaskInfoDAL.UpdateManagerTaskInfoByID(id, ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, ddlTaskStatus.SelectedValue, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, ddlAssignee.SelectedValue);
+                    Session["NewTaskCount"] = TaskInfoDAL.GetNewTaskCount(Session["Username"].ToString());
+                    Session["DueTaskCount"] = TaskInfoDAL.GetTaskDueCount(Session["Username"].ToString());
+                    Response.Write("<script language='javascript'>alert('Task updated successfully!');" + "</script>");
+                    Response.Redirect(string.Format("~/ManagerDashBoard.aspx"));
+                }
+            }
+            else
+            {
+                TaskInfoDAL.UpdateManagerTaskInfoByID(id, ddlProjectName.SelectedValue, txtTaskName.Text, txtDescription.Text, txtComment.Text, ddlTaskStatus.SelectedValue, ddlPriority.SelectedValue, txtStart.Text, txtEnd.Text, ddlAssignee.SelectedValue);
+                Session["NewTaskCount"] = TaskInfoDAL.GetNewTaskCount(Session["Username"].ToString());
+                Session["DueTaskCount"] = TaskInfoDAL.GetTaskDueCount(Session["Username"].ToString());
+                Response.Write("<script language='javascript'>alert('Task updated successfully!');" + "</script>");
+                Response.Redirect(string.Format("~/ManagerDashBoard.aspx"));
+            }
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -30,8 +31,18 @@ namespace TMS
                 }
                 else
                 {
-                    LoginDAL.UpdateUserProfile(txtEmail.Text.ToLower(), txtContact.Text, Session["Username"].ToString());
-                    Response.Write("<script language='javascript'>alert('Account has been updated successfully!');" + "</script>");
+                    Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                    RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                    bool isValidEmail = regex.IsMatch(txtEmail.Text);
+                    if (!isValidEmail && txtEmail.Text != "")
+                    {
+                        Response.Write("<script language='javascript'>alert('Invalid email address!');" + "</script>");
+                    }
+                    else
+                    {
+                        LoginDAL.UpdateUserProfile(txtEmail.Text.ToLower(), txtContact.Text, Session["Username"].ToString());
+                        Response.Write("<script language='javascript'>alert('Account has been updated successfully!');" + "</script>");
+                    }
                 }
             }
         }
